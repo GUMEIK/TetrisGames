@@ -1,0 +1,33 @@
+{
+  "name": "TetrisGames",
+  "version": "1.0.0",
+  "description": "**2020年4月19日晚，项目启动** # 项目概述 ## TetrisGames 俄罗斯方块的游戏制作 ## 项目的目的 1. 学习webpack结合TS做开发 2. 巩固TS的基础知识 3. 锻炼逻辑思维能力 4. 体验面向对象的思想（有些思想靠理解是达不到那个程度的，需要大量的练习） ##技术栈 webpack + jquery(方便dom操作) + typescript + 面向对象思想 ## 须知 整个项目可能比较复杂，切忌浮躁，要稳扎稳打，慢慢来。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=production",
+    "dev": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GUMEIK/TetrisGames.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GUMEIK/TetrisGames/issues"
+  },
+  "homepage": "https://github.com/GUMEIK/TetrisGames#readme",
+  "dependencies": {
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^4.2.0",
+    "ts-loader": "^7.0.0",
+    "webpack-dev-server": "^3.10.3"
+  }
+}
