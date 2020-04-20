@@ -12,3 +12,9 @@ export interface IViewer {
     // 移除掉，不再显示
     remove():void
 }
+/**
+ * 俄罗斯方块的形状
+ * 本质是多个小方块的坐标数组
+ */
+
+ export type Shape = Point[]
