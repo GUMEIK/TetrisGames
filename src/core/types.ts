@@ -3,6 +3,9 @@ export interface Point {
     readonly x:number
     readonly y:number
 }
+/**
+ * 能够实现该接口的，都是显示者
+ */
 export interface IViewer {
     // 显示
     show():void

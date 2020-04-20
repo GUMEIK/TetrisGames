@@ -4,8 +4,8 @@ import { Point, IViewer } from "./types";
  * 小方块类
  */
 export class Square{
-    // private _point :Point
-    // private _color:string
+    private _point :Point = {x:0,y:0}
+    private _color:string = "#000"
     // 属性：显示者，可选
     private _viewer?:IViewer
 
@@ -14,6 +14,10 @@ export class Square{
     }
     public set viewer(val){
         this._viewer = val;
+        // 如果显示者有值，就手动调用一次
+        if(val){
+            val.show()
+        }
 
     }
     public get point(){
@@ -32,8 +36,9 @@ export class Square{
     public get color (){
         return this._color;
     }
-
-    public constructor (private _point:Point,private _color:string){
-
+    public set color(val){
+        this._color = val
     }
+
+
 }
