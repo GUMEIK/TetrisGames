@@ -22,7 +22,15 @@ module.exports = {
             rules:[
                 {
                     test:/.ts$/,
-                    loader:"ts-loader"
+                    // loader:"ts-loader"
+                    // 配置加载器，并设置额外的配置
+                    use:{
+                        loader:"ts-loader",
+                        options:{
+                            // 与webpack-dev-server联用
+                            transpileOnly:true
+                        }
+                    }
                 }
             ]
         },

@@ -3,6 +3,8 @@ import { SquarePageViewer } from "./core/viewer/SquarePageViewer";
 import $ from "jquery"
 import { SquareGroup } from "./core/SquareGroup";
 import { LShape, TShape, LineShape, createTeris } from "./core/Teris";
+import { TerisRule } from "./core/TerisRules";
+import { MoveDirection } from "./core/types";
 const arr = [
     {x:0,y:-1},
     {x:-1,y:0},
@@ -10,19 +12,26 @@ const arr = [
     {x:0,y:1}
 ]
 // const group = new SquareGroup( LineShape,{x:3,y:2},"red")
-const group = createTeris({x:3,y:2})
-group.squares.forEach(sq=>{
+const teris = createTeris({x:3,y:2})
+teris.squares.forEach(sq=>{
     sq.viewer = new SquarePageViewer(sq,$("#root"))
 })
 
 
 $("#moveToDown").click(function(){
 //    更改中心点坐标
-    group.centerPoint = {
-        x:group.centerPoint.x +1 ,
-        y:group.centerPoint.y
+    const targetPoint = {
+        x:teris.centerPoint.x +1 ,
+        y:teris.centerPoint.y
     }
-    console.log(group.centerPoint)
+    // if(TerisRule.canIMove(teris.shape,targetPoint)){
+    //     teris.centerPoint = {
+    //         x:teris.centerPoint.x +1 ,
+    //         y:teris.centerPoint.y
+    //     }
+    // }
+   TerisRule.moveDirectly(teris,MoveDirection.left)
+    // console.log(teris.centerPoint)
 })
 // $("#remove").click(function(){
 //     sq.viewer && sq.viewer.remove()

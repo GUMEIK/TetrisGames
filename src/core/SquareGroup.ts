@@ -8,7 +8,10 @@ export class SquareGroup {
     public get squares(){
         return this._squares;
     }
-
+    // 抛出形状
+    public get shape(){
+        return this._shape;
+    }
     public get centerPoint():Point{
         return this._centerPoint;
     }
