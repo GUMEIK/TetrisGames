@@ -20,20 +20,60 @@
             width: 120px;
             height: 120px;
         }
+        #tip{
+            border: 1px solid black;
+        }
+        #score{
+            font-size: 4em;
+            font-weight: bold;
+            color: #f20;
+        }
+        #msg{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.3);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+        #msg p {
+            border:2px solid #fff;
+            padding:1em;
+            background-color: #f20;
+            color: #fff;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
     <div id="root">
-        <div id="panel"></div>
+        <div id="panel">
+            <div id="msg">
+                <p>游戏暂停</p>
+            </div>
+        </div>
         <div id="tip">
             <div id="next"></div>
+            <div id="score"></div>
+            <p>
+                使用键盘进行游戏：
+            </p>
+            <p>
+                ↑：旋转
+                ←：往左
+                →：往右
+                ↓：往下
+            </p>
+            <p>
+                空格：暂停/恢复/开始
+            </p>
         </div>
     </div>
     <div>
-        <button id="moveToDown">向下移动</button>
-        <button id="remove">移除</button>
-        <button id="add">添加回去</button>
-        <button id="romate">旋转</button>
+       
     </div>
 </body>
 </html>

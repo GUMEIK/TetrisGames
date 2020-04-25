@@ -7,6 +7,9 @@ import { Square } from "./Square";
 export class Game {
     // 游戏状态：游戏中＼暂停＼结束等
     private _gameStatus:GameStatus = GameStatus.init;
+    public get gameStatus(){
+        return this._gameStatus;
+    }
     // 当前玩家操作的方块
     private _curTeris?:SquareGroup;
     // 下一个方块
@@ -14,16 +17,41 @@ export class Game {
     // 计时器
     private _timer?:number
     // 自动下落间隔时间
-    private _duration:number = 1000;
+    private _duration:number ;
     // 当前游戏中，已经存在的方块
     private _exists:Square[] = [];
     // 积分
     private _score:number = 0;
 
+    public  get score(){
+        return this._score;
+    }
+    public set score(val){
+        this._score = val;
+        this._viewer.showScore(val);
+        const level = GameConfig.leavels.filter(it=>it.score <= val).pop()!;
+        console.log("leave",this._duration)
+        if(level.duration === this._duration){
+            return;
+        }
+    
+        this._duration = level.duration;
+        // 级别发生变化
+        // 停止计时
+        if(this._timer){
+            clearInterval(this._timer);
+            this._timer = undefined;
+            // 方块自由下落
+            this.autoDrop();
+        }
+    }
 
     constructor(private _viewer:GameViewer){
         this.resetCenterPoint(GameConfig.nextSize.width,this._nextTeris)
         this._viewer.showNext(this._nextTeris);
+        this._viewer.init(this);
+        this._viewer.showScore(this._score)
+        this._duration = GameConfig.leavels[0].duration;
     }
     /**
      * 重新开始游戏初始化
@@ -41,7 +69,7 @@ export class Game {
         // 显示下一个方块
         this._viewer.showNext(this._nextTeris);
         this._curTeris = undefined;
-        this._score = 0;
+        this.score = 0;
     }
 
     /**
@@ -66,6 +94,7 @@ export class Game {
         }
         // 控制当前方块的自由下落
         this.autoDrop();
+        this._viewer.onGameStart();
     }
 
     /**
@@ -76,6 +105,7 @@ export class Game {
             this._gameStatus = GameStatus.pause;
             clearInterval(this._timer)
             this._timer = undefined;
+            this._viewer.onGamePause()
         }
     }
 
@@ -152,7 +182,6 @@ export class Game {
         this._exists = this._exists.concat(this._curTeris!.squares)
         // 处理移除
         const num = TerisRule.deleteSquares(this._exists);
-        console.log(num)
          // 增加积分
         this.addScore(num)
 
@@ -166,15 +195,15 @@ export class Game {
         if(lineNum ===0 ){
             return;
         }else if(lineNum === 1){
-            this._score += 10;
+            this.score += 10;
         }else if(lineNum === 2){
-            this._score += 25;
+            this.score += 25;
         }else if(lineNum === 3){
-            this._score += 50
+            this.score += 50
         }else if(lineNum === 4){
-            this._score += 100
+            this.score += 100
         }
-        console.log(this._score)
+        // console.log(this._score)
     }
     // 切换方块
     private switchTeris(){
@@ -190,12 +219,12 @@ export class Game {
         //  
         let bool = TerisRule.canIMove(this._curTeris.shape,this._curTeris.centerPoint,this._exists)
         if(!bool){
-            alert("游戏结束")
             // 改变游戏状态
             this._gameStatus = GameStatus.over;
             // 清空计时器
             clearInterval(this._timer);
             this._timer = undefined;
+            this._viewer.onGameOver()
             return;
         }
          // 下一个方块改变

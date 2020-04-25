@@ -1,4 +1,5 @@
 import { SquareGroup } from "./SquareGroup";
+import { Game } from "./Game";
 
 export interface Point {
     // 防止外界进行更改
@@ -45,4 +46,15 @@ export interface GameViewer{
      * @param teris 切换的方块对象
      */
     switch(teris:SquareGroup):void;
+    /**
+     * 完成界面初始化
+     */
+    init(game:Game):void;
+    showScore(score:number):void;
+    /**
+     * 游戏暂停时触发的的事件
+     */
+    onGamePause():void;
+    onGameStart():void;
+    onGameOver():void;
 }

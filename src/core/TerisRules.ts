@@ -144,7 +144,6 @@ export class TerisRule {
         // 2. 获取最大和最小的ｙ坐标
         const maxY = Math.max(...ys)
         const minY = Math.min(...ys);
-        console.log(`max:${maxY},min:${minY}`)
         // 3. 循环判断每一行是否可以消除
         let num = 0;
         for(let y = minY;y <= maxY;y++){
@@ -174,7 +173,6 @@ export class TerisRule {
                
                 // 3. 从数组中移除
                 const index = exists.indexOf(sq);
-                 console.log(index)
                 exists.splice(index,1)
              })
               //  2. y行之上的小方块下移(这个地方有些小问题)
