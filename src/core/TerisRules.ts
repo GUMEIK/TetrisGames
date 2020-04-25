@@ -101,6 +101,21 @@ export class TerisRule {
             }
         }
     }
+    /**
+     * 旋转的规则
+     */
+    static rotate(teris:SquareGroup):boolean{
+        // 得到旋转之后新的形状
+        const newShape = teris.afterRotateShape();
+        if(this.canIMove(newShape,teris.centerPoint)){
+            // 能够旋转
+            teris.rotate();
+            return true;
+        }else{
+            // 不能够旋转
+            return false;
+        }
+    }
 
 }
 

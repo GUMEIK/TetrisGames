@@ -15,12 +15,13 @@ export class SquareGroup {
     public get centerPoint():Point{
         return this._centerPoint;
     }
+    /**
+     * 根据中心点坐标，以及形状，设置每一个小方块的坐标
+     */
 
-    public set centerPoint (val:Point){
-        // 设置中心点的坐标
-        this._centerPoint = val;
-        // 当中心点坐标发生改变时，更新所有小方块坐标
-        this._shape.forEach((p,i)=>{
+     private setSquarePoints(){
+         // 当中心点坐标发生改变时，更新所有小方块坐标
+         this._shape.forEach((p,i)=>{
             // 每个小方块的绝对坐标等于
             // 中心点坐标加上每个小方块的相对坐标
             this.squares[i].point = {
@@ -28,6 +29,11 @@ export class SquareGroup {
                 y:this._centerPoint.y + p.y
             }
        })
+     }
+    public set centerPoint (val:Point){
+        // 设置中心点的坐标
+        this._centerPoint = val;
+       this.setSquarePoints()
     }
     /**
      * 
@@ -52,10 +58,10 @@ export class SquareGroup {
                 */
                 const sq = new Square();
                 sq.color = this._color;
-                sq.point = {
-                    x:this._centerPoint.x + p.x,
-                    y:this._centerPoint.y + p.y
-                }
+                // sq.point = {
+                //     x:this._centerPoint.x + p.x,
+                //     y:this._centerPoint.y + p.y
+                // }
                 arr.push(sq)
            })
         //    将创建完成的方块数组赋值给this._squares
@@ -63,7 +69,46 @@ export class SquareGroup {
         // 外界可以循环这个数组，给数组中的每一个方块
         // 添加显示者，渲染到页面容器里
            this._squares = arr;
+           this.setSquarePoints()
     }
+    /**
+     * 旋转：根据当前形状产生新的形状
+     * 计算旋转之后的形状
+     */
+    protected isClock = true;//旋转的方向，默认是顺时针
+    afterRotateShape():Shape{
+        // this._shape 当前形状
+        if(this.isClock){
+            return this._shape.map(p=>{
+                const newP:Point = {
+                    x:-p.y,
+                    y:p.x
+                }
+                return newP;
+            })
+        }else{
+            return this._shape.map(p=>{
+                const newP:Point = {
+                    x:p.y,
+                    y:-p.x
+                }
+                return newP;
+            })
+        }
+    }
+    /**
+     * 实现真正的旋转
+     * 
+     */
+    rotate(){
+        // 获取旋转后的形状
+        const newShape = this.afterRotateShape();
+        // 将新的形状赋值给旧的形状
+        this._shape = newShape;
+        // 真正要处理的是小的方块，所以，最本质还要处理每个方块的坐标
+        this.setSquarePoints()
+    }
+
 }
 
 /**使用示例

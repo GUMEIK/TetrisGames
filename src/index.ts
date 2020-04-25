@@ -16,7 +16,12 @@ const teris = createTeris({x:3,y:2})
 teris.squares.forEach(sq=>{
     sq.viewer = new SquarePageViewer(sq,$("#root"))
 })
-
+// 旋转
+$("#romate").click(function () {
+    // let p = teris.rotate()
+    // console.log(p)
+    TerisRule.rotate(teris)
+})
 
 $("#moveToDown").click(function(){
 //    更改中心点坐标
