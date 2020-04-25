@@ -120,6 +120,9 @@ export class Game {
         // 1. 将当前的每一个小方块存放到已存在的方块数组中
         // this._exists.push(...this._curTeris!.squares)
         this._exists = this._exists.concat(this._curTeris!.squares)
+        // 处理移除
+        const num = TerisRule.deleteSquares(this._exists);
+        console.log(num)
         // 2. 切换方块（下一个方块）
         this.switchTeris();
 

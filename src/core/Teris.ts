@@ -159,13 +159,13 @@ export class LineShape extends SquareGroup {
  * 形状数组
  */
 export const shapes = [
-    TShape,
-    LShape,
-    LMirrorShape,
-    SMirrorShape,
-    SShape,
+    // TShape,
+    // LShape,
+    // LMirrorShape,
+    // SMirrorShape,
+    // SShape,
     SquareShape,
-    LineShape
+    // LineShape
 ]
 /**
  * 随机颜色

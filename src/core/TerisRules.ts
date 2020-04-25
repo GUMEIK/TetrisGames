@@ -126,6 +126,64 @@ export class TerisRule {
         }
     }
 
+    /**
+     * 根据ｙ坐标，获取该行所有的方块
+     * @param exists 
+     * @param y 
+     */
+    private static getLineSquares(exists:Square[],y:number){
+        return exists.filter(sq=>sq.point.y === y)
+    }
+    /**
+     * 从已存在的方块中消除，并返回消除的行数
+     * @param exists 
+     */
+    static deleteSquares(exists:Square[]):number{
+        // １．　获得ｙ坐标数组
+        const ys = exists.map(sq=>sq.point.y);
+        // 2. 获取最大和最小的ｙ坐标
+        const maxY = Math.max(...ys)
+        const minY = Math.min(...ys);
+        // 3. 循环判断每一行是否可以消除
+        let num = 0;
+        for(let y = minY;y <= maxY;y++){
+            if(this.deleteLine(exists,y)){
+                num ++;
+            }
+        }
+        return num;
+    }
+    /**
+     * 消除一行
+     * @param exists 现有的小方块
+     * @param y 行号
+     */
+    private static deleteLine(exists:Square[],y:number):boolean{
+         // 得到这一行所有的方块
+         const squares = this.getLineSquares(exists,y)
+         // 判断方块的数量是否等于面板的宽度
+         if(squares.length === GameConfig.panelSize.width){
+             // 这一行可以消除
+             squares.forEach(sq=>{
+                //  1.从界面移除
+                 if(sq.viewer){
+                     sq.viewer.remove();
+                 }
+                //  2. y行之上的小方块下移
+                exists.filter(sq=>sq.point.y < y).forEach(sq=>{
+                    sq.point = {
+                        x:sq.point.x,
+                        y:sq.point.y + 1
+                    }
+                })
+                // 3. 从数组中移除
+                const index = exists.indexOf(sq);
+                exists.splice(index,1)
+             })
+             return true;
+         }
+         return false;
+    }
 }
 
 // TerisRule.canIMove();
