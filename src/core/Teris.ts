@@ -159,11 +159,11 @@ export class LineShape extends SquareGroup {
  * 形状数组
  */
 export const shapes = [
-    // TShape,
-    // LShape,
-    // LMirrorShape,
-    // SMirrorShape,
-    // SShape,
+    TShape,
+    LShape,
+    LMirrorShape,
+    SMirrorShape,
+    SShape,
     SquareShape,
     LineShape
 ]
@@ -174,7 +174,9 @@ export const colors = [
     "red",
     "#fff",
     "green",
-    "orange"
+    "orange",
+    "pink",
+    "#ddd"
 ]
 /**
  * 随机产生俄罗斯方块
