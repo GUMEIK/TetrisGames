@@ -7,7 +7,7 @@ module.exports = {
         entry:"./src/index.ts",
         output:{
             // 出口文件根目录,转换成绝对路径
-            path:path.resolve("./dist"),
+            path:path.resolve("./TetrisGames"),
             filename:"script/bundle.js"
         },
         plugins:[

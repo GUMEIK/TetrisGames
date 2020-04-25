@@ -6,5 +6,5 @@ export default {
         height:30,
         border:"1px solid black"
     },
-    innerText:"谷美是一个文武双全的程序员耶"
+    innerText:"中华人民共和国！"
 }
