@@ -165,7 +165,7 @@ export const shapes = [
     // SMirrorShape,
     // SShape,
     SquareShape,
-    // LineShape
+    LineShape
 ]
 /**
  * 随机颜色
