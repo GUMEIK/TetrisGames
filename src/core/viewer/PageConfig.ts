@@ -5,5 +5,6 @@ export default {
         width:30,//像素值
         height:30,
         border:"1px solid black"
-    }
+    },
+    innerText:"谷美是一个文武双全的程序员耶"
 }

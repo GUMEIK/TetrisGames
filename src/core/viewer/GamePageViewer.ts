@@ -4,7 +4,6 @@ import $ from "jquery"
 import GameConfig from "../GameConfig";
 import PageConfig from "./PageConfig";
 export class GamePageViewer implements GameViewer{
-   
     private nextDom = $("#next");
     private panelDom = $("#panel");
     private scoreDom = $("#score")
@@ -28,6 +27,7 @@ export class GamePageViewer implements GameViewer{
         // 显示分数
         this.scoreDom.html(score.toString())
     }
+ 
     // 初始化
     init(game: import("../Game").Game): void {
         // １．设置宽高

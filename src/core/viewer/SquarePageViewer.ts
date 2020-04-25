@@ -2,6 +2,7 @@ import { Square } from "../Square";
 import $ from "jquery"
 import { IViewer } from "../types";
 import PageConfig from "./PageConfig";
+import { getRandom } from "../util";
 // JQuery<HTMLElement>　　泛型
 
 /**
@@ -10,6 +11,12 @@ import PageConfig from "./PageConfig";
 export class SquarePageViewer implements IViewer{
     private dom?:JQuery<HTMLElement>
     private isRemove:boolean = false//是否已经移除过了
+    randomText(){
+        const text = PageConfig.innerText;
+        const textArr =text.split("")
+        const index = getRandom(0,textArr.length);
+        return textArr[index]
+    }
     show(): void {
         if(this.isRemove){
             // 如果方块被移除了，就不用显示了
@@ -31,6 +38,8 @@ export class SquarePageViewer implements IViewer{
             top:this.square.point.y * PageConfig.SquareSize.height,
             background:this.square.color
         })
+        this.dom.text(this.randomText())
+
     }
     remove(): void {
         if(this.dom && !this.isRemove){
