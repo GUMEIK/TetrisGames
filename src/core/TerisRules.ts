@@ -1,6 +1,7 @@
 import { Point, Shape, MoveDirection } from "./types";
 import GameConfig from "./GameConfig";
 import { SquareGroup } from "./SquareGroup";
+import { Square } from "./Square";
 
 // 自定义类型保护函数
 // 判断传参数是不是坐标
@@ -19,7 +20,7 @@ export class TerisRule {
      * @param shape 形状
      * @param targetPoint 目标位置(中心点坐标，如果把这个形状当作中心点坐标)
      */
-    static canIMove(shape: Shape, targetPoint: Point): boolean {
+    static canIMove(shape: Shape, targetPoint: Point,exists:Square[]): boolean {
         // 假设，中心点已经移动到了目标位置，算出每个小方块的坐标
         const targetSquarePoints: Point[] = shape.map(it => {
             return {
@@ -40,6 +41,14 @@ export class TerisRule {
             // 如果超出了边界，则不能够移动
             return false;
         }
+        // 是否与已经有的方块重叠
+        targetSquarePoints.some(p=>
+            bool = exists.some(sq=> sq.point.x === p.x && sq.point.y === p.y)
+        )
+        if(bool){
+            // 存在已经重叠的方块
+            return false;
+        }
         return true;
     }
 
@@ -49,12 +58,12 @@ export class TerisRule {
      * 移动到某个位置
      * 函数重载
      */
-    static move(teris:SquareGroup,targetPoint:Point):boolean;
-    static move(teris:SquareGroup,direction:MoveDirection):boolean;
-    static move(teris: SquareGroup, targetPointOrDirection: Point | MoveDirection):boolean {
+    static move(teris:SquareGroup,targetPoint:Point,exists:Square[]):boolean;
+    static move(teris:SquareGroup,direction:MoveDirection,exists:Square[]):boolean;
+    static move(teris: SquareGroup, targetPointOrDirection: Point | MoveDirection,exists:Square[]):boolean {
         if (isPoint(targetPointOrDirection)) {
             // 如果能够移动，重新设置中心点的坐标
-            if (this.canIMove(teris.shape, targetPointOrDirection)) {
+            if (this.canIMove(teris.shape, targetPointOrDirection,exists)) {
                 teris.centerPoint = targetPointOrDirection
                 // 移动成功
                 return true;
@@ -82,7 +91,7 @@ export class TerisRule {
                 }
             }
             // 递归调用
-            return this.move(teris,targetPoint)
+            return this.move(teris,targetPoint,exists)
         }
 
 
@@ -93,10 +102,10 @@ export class TerisRule {
      * @param teris 
      * @param direction 
      */
-    static moveDirectly(teris:SquareGroup,direction:MoveDirection){
+    static moveDirectly(teris:SquareGroup,direction:MoveDirection,exists:Square[]){
         while(true){
             // 如果移动不成功，退出循环
-            if(!this.move(teris,direction)){
+            if(!this.move(teris,direction,exists)){
                 break;
             }
         }
@@ -104,10 +113,10 @@ export class TerisRule {
     /**
      * 旋转的规则
      */
-    static rotate(teris:SquareGroup):boolean{
+    static rotate(teris:SquareGroup,exists:Square[]):boolean{
         // 得到旋转之后新的形状
         const newShape = teris.afterRotateShape();
-        if(this.canIMove(newShape,teris.centerPoint)){
+        if(this.canIMove(newShape,teris.centerPoint,exists)){
             // 能够旋转
             teris.rotate();
             return true;

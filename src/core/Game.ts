@@ -3,6 +3,7 @@ import { SquareGroup } from "./SquareGroup";
 import { createTeris } from "./Teris";
 import { TerisRule } from "./TerisRules";
 import GameConfig from "./GameConfig";
+import { Square } from "./Square";
 export class Game {
     // 游戏状态：游戏中＼暂停＼结束等
     private _gameStatus:GameStatus = GameStatus.init;
@@ -14,7 +15,8 @@ export class Game {
     private _timer?:number
     // 自动下落间隔时间
     private _duration:number = 1000;
-
+    // 当前游戏中，已经存在的方块
+    private _exists:Square[] = [];
     constructor(private _viewer:GameViewer){
         this.resetCenterPoint(GameConfig.nextSize.width,this._nextTeris)
         this._viewer.showNext(this._nextTeris);
@@ -56,22 +58,25 @@ export class Game {
      */
     control_left(){
         if(this._curTeris && this._gameStatus === GameStatus.playing){
-            TerisRule.move(this._curTeris,MoveDirection.left)
+            TerisRule.move(this._curTeris,MoveDirection.left,this._exists)
         }
     }
     control_right(){
         if(this._curTeris && this._gameStatus === GameStatus.playing){
-            TerisRule.move(this._curTeris,MoveDirection.right)
+            TerisRule.move(this._curTeris,MoveDirection.right,this._exists)
         }
     }
     control_down(){
         if(this._curTeris && this._gameStatus === GameStatus.playing){
-            TerisRule.moveDirectly(this._curTeris,MoveDirection.down)
+
+            TerisRule.moveDirectly(this._curTeris,MoveDirection.down,this._exists)
+            // 触底
+            this.hitBottom()
         }
     }
     control_rotate(){
         if(this._curTeris && this._gameStatus === GameStatus.playing){
-            TerisRule.rotate(this._curTeris)
+            TerisRule.rotate(this._curTeris,this._exists)
         }
     }
     // 当前方块自由下落
@@ -82,7 +87,11 @@ export class Game {
         }
         this._timer = setInterval(()=>{
             if(this._curTeris){
-                TerisRule.move(this._curTeris,MoveDirection.down);
+                // 是否触底
+                let bool = TerisRule.move(this._curTeris,MoveDirection.down,this._exists);
+                if(!bool){
+                    this.hitBottom()
+                }
             }
         },this._duration)
 
@@ -104,8 +113,17 @@ export class Game {
             })
         }
     }
+    /**
+     * 触底处理函数
+     */
+    private hitBottom(){
+        // 1. 将当前的每一个小方块存放到已存在的方块数组中
+        // this._exists.push(...this._curTeris!.squares)
+        this._exists = this._exists.concat(this._curTeris!.squares)
+        // 2. 切换方块（下一个方块）
+        this.switchTeris();
 
-
+    }
     // 切换方块
     private switchTeris(){
          // 给当前玩家操作的方块赋值,赋值给下一个方块
