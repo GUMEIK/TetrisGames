@@ -1,0 +1,81 @@
+html,body{
+    width:100%;
+    height: 100%;
+}
+#root {
+    justify-content: center;
+    display: flex;
+    box-sizing: border-box;
+}
+
+#panel {
+    background-color: black;
+    position: relative;
+}
+
+
+#next {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+#tip {
+    border: 1px solid black;
+}
+
+#score {
+    font-size: 4em;
+    font-weight: bold;
+    color: #f20;
+}
+
+#msg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+#msg p {
+    border: 2px solid #fff;
+    padding: 1em;
+    background-color: #f20;
+    color: #fff;
+    border-radius: 10px;
+}
+
+#button {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    margin: 5px;
+    /* width: 50px; */
+    padding: 8px;
+    background-color: #428bca;
+    border-color: #357ebd;
+    color: #fff;
+    /* -moz-border-radius: 10px; */
+    /* -webkit-border-radius: 10px; */
+    /* border-radius: 10px; */
+    /* future proofing */
+    /* -khtml-border-radius: 10px; */
+    /* for old Konqueror browsers */
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    font-weight: 900;
+}
+#blank{
+    width: 80%;
+}

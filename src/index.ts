@@ -2,6 +2,8 @@ import { Game } from "./core/Game";
 import { GamePageViewer } from "./core/viewer/GamePageViewer";
 import $ from "jquery"
 import { GameStatus } from "./core/types";
+// 导入css样式
+import  './css/index.css'
 const g = new Game(new GamePageViewer());
 $("#btnRotate").click(()=>{
     g.control_rotate();

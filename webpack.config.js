@@ -16,7 +16,6 @@ module.exports = {
                 template:"./public/index.html"
             }),
             new CleanWebpackPlugin()
-
         ],
         module:{
             rules:[
@@ -31,11 +30,14 @@ module.exports = {
                             transpileOnly:true
                         }
                     }
+                },{
+                    test:/\.css$/,
+                    use:["style-loader","css-loader"]
                 }
             ]
         },
         resolve:{
             // 加入解析的扩展名
-            extensions:[".ts",".js"]
+            extensions:[".ts",".js",".css"]
         }
 }
